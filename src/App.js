@@ -46,6 +46,7 @@ class App extends Component {
           style={styles[style]}
           key={style}
           onClick={() => this.styleHandler(style)}
+          className={this.state[style] ? "btn-primary" : ""}
         >
           {style}
         </button>
