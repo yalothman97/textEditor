@@ -10,33 +10,21 @@ const styles = {
 class App extends Component {
   state = {
     color: "black",
-    bold: "",
-    italic: "",
-    underline: ""
+    bold: false,
+    italic: false,
+    underline: false
   };
 
   styleHandler = style => {
-    if (style === "bold") {
-      if (this.state.bold === "") {
-        this.setState({ bold: "bold" });
-      } else {
-        this.setState({ bold: "" });
-      }
-    } else if (style === "italic") {
-      if (this.state.italic === "") {
-        this.setState({ italic: "italic" });
-      } else {
-        this.setState({ italic: "" });
-      }
-    } else if (style === "underline") {
-      if (this.state.underline === "") {
-        this.setState({ underline: "underline" });
-      } else {
-        this.setState({ underline: "" });
-      }
-    }
+    this.setState({ [style]: !this.state[style] });
   };
   render() {
+    let stylesApplied = {
+      color: this.state.color,
+      fontWeight: this.state.bold ? "bold" : "",
+      fontStyle: this.state.italic ? "italic" : "",
+      textDecorationLine: this.state.underline ? "underline" : ""
+    };
     let styleNames = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
 
@@ -45,6 +33,7 @@ class App extends Component {
         <button
           style={styles[style]}
           key={style}
+          className={this.state[style] ? "btn-info" : "btn-primary"}
           onClick={() => this.styleHandler(style)}
         >
           {style}
@@ -65,14 +54,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="my-3">{stylingBoxes}</div>
-        <textarea
-          style={{
-            color: this.state.color,
-            fontWeight: this.state.bold,
-            fontStyle: this.state.italic,
-            textDecorationLine: this.state.underline
-          }}
-        />
+        <textarea style={stylesApplied} />
         <div className="my-3">{colorBoxes}</div>
       </div>
     );
